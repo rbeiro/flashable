@@ -23,11 +23,12 @@ interface FlashcardsProps {
   sections?: Section[] | undefined
   userDataFirstLoad?: boolean
   setUserDataFirstLoad: (value: boolean) => void
-  setSections: (data: Section[] | undefined) => void
+  setSections: (sectionData: Section[] | undefined) => void
   addNewSection: (newSection: Section) => void
   deleteSection: (sectionId: number) => void
-  addNewFlashCard: (data: FlashCard, sectionId: number) => void
+  addNewFlashCard: (flascardData: FlashCard, sectionId: number) => void
   deleteFlashCard: (flashcardId: string, sectionId: number) => void
+  editFlashCard: (flascardData: FlashCard, sectionId: number) => void
   getInitialSections: () => Promise<void>
 }
 
@@ -44,8 +45,8 @@ export const useFlashCardStore = create<FlashcardsProps>()(
           })
         },
 
-        setSections(data) {
-          set(() => ({ sections: data }))
+        setSections(sectionData) {
+          set(() => ({ sections: sectionData }))
         },
 
         addNewSection(newSection) {
@@ -105,6 +106,38 @@ export const useFlashCardStore = create<FlashcardsProps>()(
                 return {
                   ...curSection,
                   flashcards: filteredFlashcards,
+                }
+              }
+
+              return curSection
+            })
+
+            return {
+              ...state,
+              sections: updatedSections,
+            }
+          })
+        },
+
+        editFlashCard(flashcardData, selectedSectionId) {
+          set((state) => {
+            const updatedSections = state.sections?.map((curSection) => {
+              if (curSection.id === selectedSectionId) {
+                const currentSectionFlashcards = curSection.flashcards!
+                const updatedFlashcards = currentSectionFlashcards.map(
+                  (curFlashcard) => {
+                    if (flashcardData.id === curFlashcard.id) {
+                      return {
+                        ...flashcardData,
+                      }
+                    }
+
+                    return curFlashcard
+                  },
+                )
+                return {
+                  ...curSection,
+                  flashcards: updatedFlashcards,
                 }
               }
 

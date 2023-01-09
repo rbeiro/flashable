@@ -1,23 +1,16 @@
-import { BaseSyntheticEvent, useState } from 'react'
-// import { useFlashCardStore } from '../../../../lib/zustand/flashCardStore'
+import { BaseSyntheticEvent, Dispatch, SetStateAction, useState } from 'react'
+import { useFlashCardStore } from '../../../../lib/zustand/flashCardStore'
 import s from './styles.module.scss'
-// import supabase from '../../../../lib/supabase-browser'
+import supabase from '../../../../lib/supabase-browser'
 import { Button } from '../../../Button'
 import { MultiLineInput } from '../../../Inputs'
-
 
 interface EditFlashCardProps {
   id?: string
   answerRevealed?: boolean
   wordOrQuestion: string
   answer: string
-  type: Types
-}
-
-enum Types {
-  'Pergunta',
-  'Palavra',
-  'Frase'
+  type: 'Pergunta' | 'Palavra' | 'Frase'
 }
 
 interface Section {
@@ -40,42 +33,71 @@ export function EditModeFlashcard({
   toggleEditMode,
   currentSection,
 }: FlashcardPageProps) {
-  const [currentTypeInput, setCurrentTypeInput] = useState()
   const [answerRevealed, setAnswerRevealed] = useState(defaultAnswerRevealed)
-  const [currentAnswer, setCurrentAnswer] = useState(answer)
+  const [wordOrQuestionValue, setWordOrQuestionValue] = useState(wordOrQuestion)
+  const [answerValue, setAnswerValue] = useState(answer)
+  const [editedFlashcardType, setEditedFlashcardType] = useState(type)
 
-  const [frontTextAreaHeight, setFrontTextAreaHeight] = useState(null)
-  const [backTextAreaHeight, setBackTextAreaHeight] = useState(null)
-
-  const [currentWordOrQuestion, setCurrentWordOrQuestion] =
-    useState(wordOrQuestion)
-  // const {} = useFlashCardStore()
-
+  const { editFlashCard } = useFlashCardStore()
   function toggleShowAnswer() {
     setAnswerRevealed(!answerRevealed)
   }
 
   function handleInputEdit(
     e: BaseSyntheticEvent,
-    setState: any,
-    setHeightState: any,
+    setState: Dispatch<SetStateAction<string>>,
   ) {
     e.preventDefault()
     const target = e.target as HTMLTextAreaElement
-    console.log(e)
-
-    const textAreaScrollHeight = target.scrollHeight
-    setHeightState(textAreaScrollHeight)
     setState(target.value)
   }
 
   async function handleSaveEdits() {
-    console.log('Edits were saved')
-    toggleEditMode(false)
+    const { data: userData } = await supabase.auth.getSession()
+
+    if (userData.session?.user.role === 'authenticated') {
+      const editedFlashcardData: EditFlashCardProps = {
+        id,
+        answerRevealed: false,
+        wordOrQuestion: wordOrQuestionValue,
+        answer: answerValue,
+        type: editedFlashcardType,
+      }
+
+      const stringfiedFlashcards =
+        currentSection.flashcards?.map((flashcard) => {
+          if (flashcard.id === id) {
+            return JSON.stringify(editedFlashcardData)
+          }
+
+          return JSON.stringify(flashcard)
+        }) || []
+
+      if (stringfiedFlashcards.length <= 0) {
+        stringfiedFlashcards.push(JSON.stringify(editedFlashcardData))
+      }
+
+      console.log(stringfiedFlashcards)
+
+      const { error } = await supabase
+        .from('sections')
+        .update({
+          flashcards: [...stringfiedFlashcards],
+        })
+        .eq('title', currentSection.title)
+
+      if (!error) {
+        editFlashCard(editedFlashcardData, currentSection.id)
+        console.log('Edits were saved')
+        toggleEditMode(false)
+      }
+    } else {
+      console.log('Not Allowed')
+    }
   }
 
   function handleTypeInput(e: BaseSyntheticEvent) {
-
+    setEditedFlashcardType(e.target.value)
   }
   return (
     <div
@@ -89,41 +111,20 @@ export function EditModeFlashcard({
         // "Front" of flashcard
         <>
           <div className={s.inputWrapper}>
-            <input 
-              className={s.editableTitle} 
-              type="text" 
-              onChange={handleTypeInput} 
-              placeholder={String(type)} 
-              defaultValue={type}
+            <input
+              className={s.editableTitle}
+              type="text"
+              value={editedFlashcardType}
+              onChange={handleTypeInput}
+              placeholder={String(type)}
             />
-            {/* <span className={s.typeSuggestion}>{type}</span> */}
           </div>
           <div className={s.editableContent}>
             <MultiLineInput
-              value={currentWordOrQuestion}
-              onChange={(e) =>
-                handleInputEdit(
-                  e,
-                  setCurrentWordOrQuestion,
-                  setFrontTextAreaHeight,
-                )
-              }
+              initialHeight="37px"
+              value={wordOrQuestionValue}
+              onChange={(e) => handleInputEdit(e, setWordOrQuestionValue)}
             />
-            {/* <textarea
-              style={
-                frontTextAreaHeight
-                  ? { height: `${frontTextAreaHeight}px` }
-                  : { height: `auto` }
-              }
-              value={currentWordOrQuestion}
-              onChange={(e) =>
-                handleInputEdit(
-                  e,
-                  setCurrentWordOrQuestion,
-                  setFrontTextAreaHeight,
-                )
-              }
-            /> */}
           </div>
           <Button
             variant="transparent-background"
@@ -143,10 +144,9 @@ export function EditModeFlashcard({
           <h3 className={s.title}>Resposta:</h3>
           <div className={s.editableContent}>
             <MultiLineInput
-              value={currentAnswer}
-              onChange={(e) =>
-                handleInputEdit(e, setCurrentAnswer, setBackTextAreaHeight)
-              }
+              initialHeight="37px"
+              value={answerValue}
+              onChange={(e) => handleInputEdit(e, setAnswerValue)}
             />
           </div>
           <Button

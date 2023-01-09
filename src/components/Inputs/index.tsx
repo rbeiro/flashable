@@ -4,7 +4,6 @@ import {
   EyeOpenIcon,
 } from '@radix-ui/react-icons'
 import {
-  BaseSyntheticEvent,
   DetailedHTMLProps,
   InputHTMLAttributes,
   SyntheticEvent,
@@ -58,31 +57,27 @@ interface MultlineInputProps
     InputHTMLAttributes<HTMLTextAreaElement>,
     HTMLTextAreaElement
   > {
-  initialValue?: string
+  initialHeight?: string
 }
 
-export function MultiLineInput({ value, ...props }: MultlineInputProps) {
-  const [currentHeight, setCurrentHeight] = useState<string | null>(null)
-  const textAreaRef = useRef<HTMLTextAreaElement>(null)
+export function MultiLineInput({
+  initialHeight = 'auto',
+  ...props
+}: MultlineInputProps) {
+  const inputRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
-    setCurrentHeight(`${textAreaRef.current!.scrollHeight}px`)
-  }, [value])
-
-  function handleKeyUp(e: BaseSyntheticEvent) {
-    const target = e.target as HTMLTextAreaElement
-    setCurrentHeight('37px')
-  }
+    if (inputRef.current?.style.height && inputRef.current.scrollHeight) {
+      inputRef.current.style.height = initialHeight
+      inputRef.current.style.height = `${inputRef.current.scrollHeight}px`
+    }
+  }, [props.value, initialHeight])
 
   return (
     <textarea
-      ref={textAreaRef}
-      value={value}
-      style={
-        currentHeight ? { height: `${currentHeight}` } : { height: `${37}px` }
-      }
+      ref={inputRef}
+      style={{ height: initialHeight }}
       className={s.multilineInputTextarea}
-      onKeyUp={handleKeyUp}
       {...props}
     />
   )

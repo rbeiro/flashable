@@ -15,7 +15,7 @@ export function AddNewGroup({ children }: PopupProps) {
 
   const sectionNameRef = useRef<HTMLInputElement>(null)
 
-  async function handleNewGroupCreatiion(e: SyntheticEvent) {
+  async function handleNewGroupCreation(e: SyntheticEvent) {
     e.preventDefault()
     const { data: userData } = await supabase.auth.getSession()
     if (
@@ -53,7 +53,7 @@ export function AddNewGroup({ children }: PopupProps) {
           </Popup.Description>
         </div>
         <form
-          onSubmit={(e) => handleNewGroupCreatiion(e)}
+          onSubmit={(e) => handleNewGroupCreation(e)}
           className={s.addNewFlashcardForm}
         >
           <Input type="text" labelName="Título" reference={sectionNameRef} />

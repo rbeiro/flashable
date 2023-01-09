@@ -160,6 +160,7 @@ export default function Page() {
                     />
                   </div>
                 </div>
+                <p>Sort by: date</p>
                 <div className={s.sectionContent}>
                   {section.flashcards &&
                     !searchedValue[section.id] &&
