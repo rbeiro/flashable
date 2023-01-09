@@ -1,0 +1,30 @@
+.closeButton {
+  font-family: inherit;
+  color: var(--indigo11);
+  border-radius: var(--radii-full);
+  
+  height: 25px;
+  width: 25px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  transition: all .15s var(--transition-basic);
+  line-height: 0;
+
+  &:hover {
+    background-color: var(--indigo5);
+    color: var(--indigo11);
+  }
+}
+
+.positionAbsolute {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.transparent {
+  color: transparent;
+}

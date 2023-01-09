@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  border-radius: var(--radii-full);
+  background-color: var(--indigo6);
+  height: 3rem;
+  width: 3rem;
+  position: relative;
+  
+  & img {
+    position: absolute;
+    bottom: 0;
+  }
+}

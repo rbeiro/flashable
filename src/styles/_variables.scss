@@ -1,0 +1,38 @@
+@import "@rbeiro-ui/tokens/css/index.css";
+
+@import "@radix-ui/colors/indigo.css";
+@import "@radix-ui/colors/indigoA.css";
+
+@import "@radix-ui/colors/indigoDark.css";
+@import "@radix-ui/colors/indigoDarkA.css";
+
+@import "@radix-ui/colors/slate.css";
+@import "@radix-ui/colors/slateDark.css";
+
+@import "@radix-ui/colors/gray.css";
+@import "@radix-ui/colors/grayDark.css";
+
+@import "@radix-ui/colors/red.css";
+@import "@radix-ui/colors/redDark.css";
+
+@import "@radix-ui/colors/grass.css";
+@import "@radix-ui/colors/grassDark.css";
+
+@import "@radix-ui/colors/yellow.css";
+@import "@radix-ui/colors/yellowDark.css";
+
+@import "@radix-ui/colors/amber.css";
+@import "@radix-ui/colors/amberDark.css";
+
+@import "@radix-ui/colors/blackA.css";
+@import "@radix-ui/colors/whiteA.css";
+
+//Gray colors
+$grayBackground: var(--slate1);
+$grayBackgroundSubtle: var(--slate2);
+$grayText: var(--slate12);
+
+//Font
+$textFont: 'Poppins', Arial, Helvetica, sans-serif;
+$headingFont: 'Poppins', Arial, Helvetica, sans-serif
+

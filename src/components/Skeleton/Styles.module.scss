@@ -1,0 +1,100 @@
+@mixin animate($animation,$duration,$method,$times){
+  animation: $animation $duration  $times;
+  animation-timing-function: $method;
+}
+
+@mixin keyframes($name){
+  @keyframes #{$name}{
+      @content;
+  }
+}
+@keyframes shimmer {
+  100% {
+    transform: 'translateX(100%)';
+  };
+}
+
+.Root {
+  --child-background-color: var(--gray4);
+  background-color: var(--gray1);
+  padding: var(--space-4);
+  border-radius: var(--radii-sm);
+  min-width: 220px;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
+  overflow: hidden;
+
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    background-image: linear-gradient((to right, transparent, rgb(255 255 255 / 0.1)), transparent);
+    transform: translateX(-100%);
+    
+    @include keyframes(shimmer) {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+    
+    @include animate(shimmer, 1.2s,  cubic-bezier(0.25 0.46 0.45 0.94) 0s, infinite);
+    
+    
+  }
+}
+
+.circle {
+  height: var(--space-12);
+  width: var(--space-12);
+  border-radius: var(--radii-full);
+  background-color: var(--child-background-color);
+}
+
+.circleContainer {
+  display: grid;
+  grid-template-columns: var(--space-12) 1fr;
+  
+  gap: var(--space-6);
+}
+
+.circleChildrenWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  gap: var(--space-3);
+}
+
+.fullLine {
+  width: 100%;
+  height: var(--space-3);
+  background-color: var(--child-background-color);
+  border-radius: var(--radii-sm);
+}
+
+.mediumLine {
+  width: 80%;
+  height: var(--space-3);
+  background-color: var(--child-background-color);
+  border-radius: var(--radii-sm);
+}
+.shortLine {
+  width: 50%;
+  height: var(--space-3);
+  background-color: var(--child-background-color);
+  border-radius: var(--radii-sm);
+}
+
+.Box {
+  height: var(--space-14);
+  width: 100%;
+  background-color: var(--child-background-color);
+  border-radius: var(--radii-sm);
+}

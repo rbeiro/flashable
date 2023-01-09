@@ -1,0 +1,7 @@
+.pageContainer {
+  min-height: calc(100vh - var(--header-height));
+  margin-top: var(--header-height);
+  padding: 2rem 3rem;
+  display: flex;
+  padding-bottom: var(--header-height);
+}

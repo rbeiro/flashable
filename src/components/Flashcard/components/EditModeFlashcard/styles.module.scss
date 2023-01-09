@@ -1,0 +1,98 @@
+.flashcardContainer {
+  padding: 1rem;
+  background-color: var(--red3);
+  border-radius: var(--radii-sm);
+  width: 200px;
+  height: 250px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  position: relative;
+
+  transition: all .15s var(--transition-basic);
+
+  & .saveButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: var(--fontSize-sm);
+    border-radius: var(--radii-sm);
+    height: 2rem;
+    padding: 0 0.75rem;
+    color: var(--red11);
+
+    transition: all 150ms var(--transition-basic);
+
+    line-height: 0;
+
+
+    &:hover {
+      background-color: var(--red5);
+      color: var(--red11);
+    }
+  }
+}
+
+.answerRevealed {
+  background-color: var(--red6);
+}
+
+.editableContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: var(--fontSize-2xl);
+  font-weight: bold;
+  overflow-y: hidden;
+  max-height: 120px;
+
+  position: relative;
+
+  & textarea{
+    all: unset;
+    cursor: text;
+    overflow-wrap: break-word;
+    border-bottom: 1px solid var(--slate12);
+    line-height: 1.6;
+    height: 1.5rem;
+    resize: none;
+
+    &::-webkit-scrollbar {
+      width: 0px;
+    }
+  }
+}
+
+.title {
+  font-weight: normal;
+  font-size: var(--fontSize-sm);
+}
+
+.editableTitle {
+  display: flex;
+  font-weight: normal;
+  font-size: var(--fontSize-sm);
+  border-bottom: 1px solid var(--slate12);
+  width: 100%;
+}
+
+.inputWrapper {
+  max-width: 66px;
+  position: relative;
+}
+
+.typeSuggestion {
+  cursor: none;
+  pointer-events: none;
+  position: absolute;
+  font-weight: normal;
+  opacity: .4;
+  font-size: var(--fontSize-sm);
+  top: 0;
+  left: 0;
+}

@@ -1,0 +1,156 @@
+.spinner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 50%;
+    aspect-ratio: 1 / 1;
+    transform: translate(-50%, -50%);
+
+    z-index: 18;
+    pointer-events: none;
+}
+
+.spinner_container {
+
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  padding-bottom: 100%;
+  top: 50%;
+  left: 50%;
+  margin-top: -50%;
+  margin-left: -50%;
+  animation: spinner-linspin 1560ms linear infinite;
+}
+
+.spinner_rotator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  animation: spinner-easespin 5332ms cubic-bezier(0.4,0,0.2,1) infinite both
+}
+
+.spinner_left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow: hidden
+}
+
+.spinner_right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden
+}
+
+.spinner_left {
+  right: 50%
+}
+
+.spinner_right {
+  left: 50%
+}
+
+.spinner_circle{
+  all: unset;
+  box-sizing: border-box;
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  border-style: solid;
+
+  border-radius: var(--radii-full);
+  border-width: 0.1875rem;
+}
+
+.spinner_left .spinner_circle{
+  transform: rotate(130deg) translate(0, 0);
+  right: -100%;
+  left: 0;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  
+  animation: spinner_left-spin 1333ms cubic-bezier(0.4,0,0.2,1) infinite both
+}
+
+.spinner_right .spinner_circle{
+  transform: rotate(0) translate(0, 0);
+  right: 0;
+  left: -100%;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  animation: spinner_right-spin 1333ms cubic-bezier(0.4,0,0.2,1) infinite both
+} 
+
+@keyframes spinner-linspin {
+  to {
+      transform: rotate(360deg)
+  }
+}
+
+@keyframes spinner-easespin {
+  12.5% {
+      transform: rotate(135deg)
+  }
+
+  25% {
+      transform: rotate(270deg)
+  }
+
+  37.5% {
+      transform: rotate(405deg)
+  }
+
+  50% {
+      transform: rotate(540deg)
+  }
+
+  62.5% {
+      transform: rotate(675deg)
+  }
+
+  75% {
+      transform: rotate(810deg)
+  }
+
+  87.5% {
+      transform: rotate(945deg)
+  }
+
+  to {
+      transform: rotate(1080deg)
+  }
+}
+
+@keyframes spinner_left-spin {
+  from {
+      transform: rotate(130deg)
+  }
+
+  50% {
+      transform: rotate(-5deg)
+  }
+
+  to {
+      transform: rotate(130deg)
+  }
+}
+
+@keyframes spinner_right-spin {
+  from{
+      transform: rotate(-130deg) translate(0, 0)
+  }
+
+  50% {
+      transform: rotate(5deg) translate(0, 0)
+  }
+
+  to {
+      transform: rotate(-130deg) translate(0, 0)
+  }
+}

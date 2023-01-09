@@ -1,0 +1,94 @@
+@import "./variables";
+
+:root {
+  --radii-sm: 6px;
+  --radii-full: 99999px !important;
+  --transition-basic: cubic-bezier(.25,.46,.45,.94);
+  
+  --colors-accent1: hsl(255, 35%, 9%);
+  --colors-accent2: hsl(261, 51%, 12%);
+  --colors-accent3: hsl(259, 58%, 17%);
+  --colors-accent4: hsl(259, 65%, 20%);
+  --colors-accent5: hsl(258, 71%, 24%);
+  --colors-accent6: hsl(257, 78%, 36%);
+  --colors-accent7: hsl(256, 86%, 42%);
+  --colors-accent8: hsl(256, 90%, 52%);
+  --colors-accent9: hsl(251, 76%, 50%);
+  --colors-accent10: hsl(246, 76%, 54%);
+  --colors-accent11: hsl(249, 100%, 71%);
+  --colors-accent12: hsl(249, 100%, 92%);
+
+  --colors-accentLight1: hsl(250 100% 99.2%);
+  --colors-accentLight2: hsl(250, 100%, 97%);
+  --colors-accentLight3: hsl(255, 100%, 96%);
+  --colors-accentLight4: hsl(255, 100%, 94%);
+  --colors-accentLight5: hsl(253, 96%, 90%);
+  --colors-accentLight6: hsl(254, 82%, 85%);
+  --colors-accentLight7: hsl(253, 78%, 77%);
+  --colors-accentLight8: hsl(251, 82%, 65%);
+  --colors-accentLight9: hsl(251, 76%, 50%);
+  --colors-accentLight10: hsl(256, 100%, 45%);
+  --colors-accentLight11: hsl(256, 100%, 43%);
+  --colors-accentLight12: hsl(256, 100%, 15%);
+
+  --header-height: 100px;
+  --radix-navigation-menu-viewport-height: 0px;
+  --app-max-width: 1120px;
+
+  //--animation-shimmer: shimmer
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  background: var(--slate1);
+  color: $grayText;
+  line-height: var(--lineHeight-base);
+};
+
+body, input, textarea, button {
+  font-family: $textFont;
+  font-weight: var(--fontWeight-regular);
+};
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Poppins", "sans-serif";
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $headingFont;
+};
+
+button,
+fieldset,
+input {
+  all: unset;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.dark-theme {
+  color-scheme: dark;
+}
+
+.success {
+  color: var(--grass9);
+}
+
+.error {
+  color: var(--red9)
+}
+
+[data-nextjs-scroll-focus-boundary] {
+  display: contents;
+}

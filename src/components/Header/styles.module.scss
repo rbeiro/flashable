@@ -1,0 +1,61 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+
+  background: var(--indigoA3);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+
+  height: var(--header-height);
+  width: 100%;
+
+  padding: 0 3rem;
+
+  z-index: 9;
+}
+
+.logo {
+  font-size: var(--fontSize-2xl);
+  font-weight: 700;
+
+  &::after {
+    margin-left: 1px;
+    content: ".";
+    color: var(--yellow11);
+    font-size: var(--fontSize-4xl);
+  }
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+}
+
+.navContainer {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  & .signup {
+    background: var(--yellow9);
+    color: var(--indigo3);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radii-sm);
+    transition: all .2s var(--transition-basic);
+
+    &:hover {
+      background-color: var(--yellow9);
+
+      -webkit-box-shadow:0px 0px 12px 0px  var(--yellow9);
+      -moz-box-shadow: 0px 0px 12px 0px  var(--yellow9);
+      box-shadow: 0px 0px 12px 0px  var(--yellow9);
+    }
+  }
+}

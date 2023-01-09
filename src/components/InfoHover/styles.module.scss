@@ -1,0 +1,28 @@
+.background {
+  width: 250px;
+  font-size: var(--fontSize-sm);
+  background: var(--indigo2);
+  padding: 0.75rem;
+  border-radius: var(--radii-sm);
+
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+
+  animation: contentShow .15s var(--transition-basic);
+}
+
+.arrow {
+  fill: var(--indigo2);
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  animation: contentShow .15s var(--transition-basic);
+}
+
+@keyframes contentShow {
+  from {
+    opacity: 0;
+    transform: translate(0%, -2%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0%, 0%) scale(1);
+  }
+}

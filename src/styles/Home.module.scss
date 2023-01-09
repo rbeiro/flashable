@@ -1,0 +1,41 @@
+.container {
+  width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroContainer {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1rem;
+
+  & h1 {
+    font-size: var(--fontSize-5xl);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+}
+
+.heroDescription {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+
+  form {
+    display: flex;
+    
+    gap: 1rem;
+    
+    & label {
+      background-color: var(--slate1);
+    }
+  }
+}
+
+.alreadyLoggedInText {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}

@@ -1,0 +1,131 @@
+.addNewFlashcardForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  & button[type="submit"] {
+    all: unset;
+    text-align: center;
+    font-family: 'Poppins';
+    height: 40px;
+    font-size: var(--fontSize-sm);
+    padding: .5rem;
+    border-radius: var(--radii-sm);
+    background-color: var(--indigo6);
+    transition: all .2s var(--transition-basic);
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--indigo7);
+      transition: all .2s var(--transition-basic);
+    }
+  }
+
+  & .inputContainer {
+    margin-top: 1.25rem;;
+    position: relative;
+    cursor: pointer;
+    padding: .75rem 1rem;
+
+      &::after {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 1px;
+        width: 100%;
+        background-color: var(--slate9);
+        border-radius: var(--radii-sm);
+      }
+    
+      & input {
+        all: unset;
+        width: 100%;
+        height: 100%;
+    
+        &:not(:placeholder-shown) + label{
+          top: 0;
+          left: 0;
+          transform: translateY(-90%);
+          font-size: 14px;
+        }
+    
+        &:focus + label{
+          top: 0;
+          left: 0;
+          transform: translateY(-90%);
+          font-size: 14px;
+        }
+    
+        &::placeholder {
+          color: transparent;
+        }
+      }
+
+      & label {
+        height: 1.25rem;
+        z-index: -1;
+        color: var(--slate9);
+        position: absolute;
+        top: 51%;
+        left: 1rem;
+        transform: translateY(-50%);
+      
+        transition: all .2s cubic-bezier(.46,.27,.41,.94);
+      
+        
+      }
+  }
+}
+
+.aditionalAnswerButton {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  padding: .3rem .5rem;
+  gap: 5px;
+  transition: all .2s var(--transition-basic);
+  border-radius: var(--radii-sm);
+
+  &:hover {
+    background: var(--indigo6);      
+    color: var(--slate12);
+
+  }
+}
+
+.additionalAnswerContainer {
+  position: relative;
+}
+.additionalAnswerButtonContainer {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 5px;
+  color: var(--slate9);
+  
+}
+
+.closeButton {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-family: inherit;
+  color: var(--indigo11);
+  border-radius: var(--radii-full);
+  
+  height: 25px;
+  width: 25px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  transition: all .15s var(--transition-basic);
+
+  &:hover {
+    background-color: var(--indigo5);
+  }
+}

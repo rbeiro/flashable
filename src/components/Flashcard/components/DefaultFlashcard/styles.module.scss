@@ -1,0 +1,34 @@
+.flashcardContainer {
+  padding: 1rem;
+  background-color: var(--indigo3);
+  border-radius: var(--radii-sm);
+  width: 200px;
+  height: 250px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  position: relative;
+
+  transition: all .15s var(--transition-basic);
+}
+
+.answerRevealed {
+  background-color: var(--indigo6);
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-size: var(--fontSize-2xl);
+  font-weight: bold;
+}
+
+.title {
+  font-weight: normal;
+  font-size: var(--fontSize-sm);
+}

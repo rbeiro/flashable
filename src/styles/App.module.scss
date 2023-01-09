@@ -1,0 +1,287 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  & h1 {
+    font-size: var(--fontSize-4xl);
+  }
+}
+
+.closeButton {
+  font-family: inherit;
+  background-color: var(--red5);
+  color: var(--red11);
+  border-radius: var(--radii-full);
+  
+  height: 25px;
+  width: 25px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  transition: all .15s var(--transition-basic);
+
+  &:hover {
+    background-color: var(--red5);
+    color: var(--red11);
+  }
+}
+.searchButton {
+  background-color: var(--indigo5);
+    color: var(--indigo11);
+  font-family: inherit;
+  //color: transparent;
+  border-radius: var(--radii-full);
+  
+  height: 25px;
+  width: 25px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  transition: all .15s var(--transition-basic);
+
+  &:hover {
+    background-color: var(--indigo5);
+    color: var(--indigo11);
+  }
+}
+
+.revealSearchButtonWrapper {
+  transition: all .5s var(--transition-basic);
+
+  &[data-state="closed"] {
+    opacity: 0;
+  }
+  &[data-state="open"] {
+    opacity: 1;
+  }
+}
+
+.sectionContainer {
+  & > .sectionTitle {
+    cursor: default;
+    width: max-content;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+
+    gap: .5rem;
+
+    & h2:hover + .searchButton {
+      background-color: var(--indigo5);
+      color: var(--indigo11);
+    }
+
+    & h2:hover + .closeButton {
+      background-color: var(--red5);
+      color: var(--red11);
+    }
+    
+  }
+}
+.sectionContent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.addNewSection {
+  display: flex;
+  width: max-content;
+  min-width: 200px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: var(--indigo4);
+  padding: .5rem 1rem;
+  border-radius: var(--radii-sm);
+  transition: all .2s var(--transition-basic);
+
+  .circle {
+    padding: .75rem;
+  }
+
+  &:hover {
+    background-color: var(--indigo5);
+    cursor: pointer;
+    
+    & .circle {
+      background-color: var(--indigo4);
+    }
+  }
+}
+
+.flashcardContainer {
+  padding: 1rem;
+  background-color: var(--indigo3);
+  border-radius: var(--radii-sm);
+  width: 200px;
+  height: 250px;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+  position: relative;
+  
+  .deleteButton {
+    all: unset;
+    line-height: 0;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+  }
+  
+  .revealAnswer {
+    all: unset;
+    border-radius: var(--radii-sm);
+    padding: .25rem;
+    font-family: 'Poppins';
+    font-size: 12px;
+    text-align: center;
+    
+    cursor: pointer;
+    transition: all .2s var(--transition-basic);
+    
+    :hover {
+      background-color: var(--indigo5);
+      transition: all .2s var(--transition-basic);
+    }
+  }
+}
+
+
+.addNewFlashCard {
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: var(--indigo11);
+  transition: all .2s var(--transition-basic);
+  font-size: .75rem;
+  
+  &:hover {
+    color: var(--indigo12);
+    background-color: var(--indigo3);
+    cursor: pointer;
+    
+    & .circle {
+      background-color: var(--indigo4);
+    }
+  } 
+}
+.circle {
+  padding: 1rem;
+  background-color: var(--indigo3);
+  line-height: 0;
+  border-radius: var(--radii-full);
+  transition: background-color .2s var(--transition-basic);
+}
+
+@media only screen and (max-width: 600px) {
+
+  .content {
+    padding: 2rem;
+  }
+  .container {
+    padding: 0;
+  }
+
+  .sectionContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  // .addNewFlashcardForm {
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: flex-start;
+  // }
+}
+
+
+// .addNewFlashcardForm {
+//   display: grid;
+//   grid-template-columns: 1fr 1fr 1fr 7.5rem;
+//   align-items: center;
+//   gap: 1.5rem;
+
+//   & button[type="submit"] {
+//     all: unset;
+//     text-align: center;
+//     font-family: 'Poppins';
+//     height: 40px;
+//     font-size: 12px;
+//     padding: .5rem;
+//     border-radius: var(--radii-sm);
+//     background-color: var(--indigo3);
+//     transition: all .2s var(--transition-basic);
+//     cursor: pointer;
+
+//     :hover {
+//       background-color: var(--indigo4);
+//       transition: all .2s var(--transition-basic);
+//     }
+//   }
+
+//   & .inputContainer {
+//     margin-top: 1.25rem;;
+//     position: relative;
+//     cursor: pointer;
+//     padding: .75rem 1rem;
+
+//     &::after {
+//       content: "";
+//       display: inline-block;
+//       position: absolute;
+//       bottom: 0;
+//       left: 0;
+//       height: 1px;
+//       width: 100%;
+//       background-color: var(--slate9);
+//       border-radius: var(--radii-sm);
+//     }
+  
+//     & input {
+//       all: unset;
+//       width: 100%;
+//       height: 100%;
+  
+//       &:not(:placeholder-shown) + label{
+//         top: 0;
+//         left: 0;
+//         transform: translateY(-90%);
+//         font-size: 14px;
+//       }
+  
+//       &:focus + label{
+//         top: 0;
+//         left: 0;
+//         transform: translateY(-90%);
+//         font-size: 14px;
+//       }
+  
+//       &::placeholder {
+//         color: transparent;
+//       }
+//     }
+
+//     & label {
+//       height: 1.25rem;
+//       z-index: -1;
+//       color: var(--slate9);
+//       position: absolute;
+//       top: 51%;
+//       left: 1rem;
+//       transform: translateY(-50%);
+    
+//       transition: all .2s cubic-bezier(.46,.27,.41,.94);
+    
+      
+//     }
+//   }
+// }
