@@ -15,39 +15,9 @@
 }
 
 .Root {
-  --child-background-color: var(--gray4);
-  background-color: var(--gray1);
-  padding: var(--space-4);
-  border-radius: var(--radii-sm);
-  min-width: 220px;
-
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-
-  overflow: hidden;
-
-  position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    inset: 0;
-    background-image: linear-gradient((to right, transparent, rgb(255 255 255 / 0.1)), transparent);
-    transform: translateX(-100%);
-    
-    @include keyframes(shimmer) {
-      100% {
-        transform: translateX(100%);
-      }
-    }
-    
-    @include animate(shimmer, 1.2s,  cubic-bezier(0.25 0.46 0.45 0.94) 0s, infinite);
-    
-    
-  }
+  gap: 1rem;
 }
 
 .circle {
@@ -72,7 +42,7 @@
   gap: var(--space-3);
 }
 
-.fullLine {
+.line {
   width: 100%;
   height: var(--space-3);
   background-color: var(--child-background-color);
@@ -81,20 +51,54 @@
 
 .mediumLine {
   width: 80%;
-  height: var(--space-3);
-  background-color: var(--child-background-color);
-  border-radius: var(--radii-sm);
 }
 .shortLine {
   width: 50%;
-  height: var(--space-3);
-  background-color: var(--child-background-color);
-  border-radius: var(--radii-sm);
 }
 
-.Box {
-  height: var(--space-14);
-  width: 100%;
-  background-color: var(--child-background-color);
+.Container {
+  --child-background-color: var(--gray4);
+  background-color: var(--gray1);
+  padding: var(--space-6);
   border-radius: var(--radii-sm);
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+
+  overflow: hidden;
+
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    background-image: linear-gradient((to right, transparent, rgb(255 255 255 / 0.1)), transparent);
+    transform: translateX(-100%);
+    
+    @include keyframes(shimmer) {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+    
+    @include animate(shimmer, 1.2s,  cubic-bezier(0.25 0.46 0.45 0.94) 0s, infinite);
+  }
+}
+
+.mediumContainer {
+  padding: var(--space-4);
+  width: 80%;
+}
+.smallContainer {
+  padding: var(--space-4);
+  width: 50%;
+}
+.xsContainer {
+  padding: var(--space-4);
+  width: 30%;
 }

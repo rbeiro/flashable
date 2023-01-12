@@ -51,10 +51,11 @@ a {
 
 body {
   -webkit-font-smoothing: antialiased;
-  background: var(--slate1);
   color: $grayText;
   line-height: var(--lineHeight-base);
+  background-color: var(--slate1)
 };
+
 
 body, input, textarea, button {
   font-family: $textFont;

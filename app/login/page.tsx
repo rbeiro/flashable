@@ -7,7 +7,6 @@ import {
   SyntheticEvent,
   useState,
 } from 'react'
-
 import { Input, PasswordInput } from '../../src/components/Inputs'
 import supabase from '../../src/lib/supabase-browser'
 import { z } from 'zod'
@@ -45,7 +44,6 @@ export default function LoginPage() {
   const { userDataFirstLoad, setUserDataFirstLoad, getInitialSections } =
     useFlashCardStore()
 
-  console.log('Data was loaded for the first time: ' + userDataFirstLoad)
   const { isRedirecting, redirectTo } = useRedirect()
 
   const [toastMessages, setToastMessages] = useState<ToastMessage[]>([])
@@ -68,8 +66,6 @@ export default function LoginPage() {
         password: userPassword.data,
       })
 
-      console.log(data)
-
       if (data.session) {
         if (!userDataFirstLoad) {
           await getInitialSections()
@@ -80,6 +76,19 @@ export default function LoginPage() {
 
         redirectTo('/app')
         return
+      }
+
+      if (error?.message === 'Invalid login credentials') {
+        setToastMessages((state) => [
+          ...state,
+          {
+            id: crypto.randomUUID(),
+            isOpen: true,
+            success: false,
+            title: 'Credenciais incorretas',
+            message: 'Por favor, verifique sua senha ou e-mail.',
+          },
+        ])
       }
 
       if (error?.message === 'Email not confirmed') {
@@ -152,48 +161,50 @@ export default function LoginPage() {
   }
 
   return (
-    <div className={s.wrapper}>
-      <h1>Login</h1>
-      <form onSubmit={handleLoginSubmit} className={s.formContainer}>
-        <h2>Insira os dados abaixo:</h2>
-        <Input
-          errorMessage={userEmail.error}
-          labelName="E-mail"
-          onBlur={(e: FocusEvent<HTMLInputElement>) =>
-            handleInputValidation(e.target.value, 'email', setUserEmail)
-          }
-        />
+    <>
+      <div className={s.wrapper}>
+        <h1>Login</h1>
+        <form onSubmit={handleLoginSubmit} className={s.formContainer}>
+          <h2>Insira os dados abaixo:</h2>
+          <Input
+            errorMessage={userEmail.error}
+            labelName="E-mail"
+            onBlur={(e: FocusEvent<HTMLInputElement>) =>
+              handleInputValidation(e.target.value, 'email', setUserEmail)
+            }
+          />
 
-        <PasswordInput
-          errorMessage={userPassword.error}
-          labelName="Senha"
-          onBlur={(e: FocusEvent<HTMLInputElement>) =>
-            handleInputValidation(e.target.value, 'password', setUserPassword)
-          }
-        />
-        <Button isLoading={isRedirecting} fillParent type="submit">
-          fazer login
-        </Button>
-      </form>
+          <PasswordInput
+            errorMessage={userPassword.error}
+            labelName="Senha"
+            onBlur={(e: FocusEvent<HTMLInputElement>) =>
+              handleInputValidation(e.target.value, 'password', setUserPassword)
+            }
+          />
+          <Button isLoading={isRedirecting} fillParent type="submit">
+            fazer login
+          </Button>
+        </form>
 
-      {toastMessages.length > 0 && (
-        <div className={s.toastMessagesContainer}>
-          {toastMessages.map((toast) => {
-            return (
-              <Toast
-                key={toast.id}
-                open={toast.isOpen}
-                handleOpenChange={(open) => {
-                  if (!open) handleToastDisplay(toast.id, open)
-                }}
-                success={toast.success}
-                title={toast.title}
-                description={toast.message}
-              />
-            )
-          })}
-        </div>
-      )}
-    </div>
+        {toastMessages.length > 0 && (
+          <div className={s.toastMessagesContainer}>
+            {toastMessages.map((toast) => {
+              return (
+                <Toast
+                  key={toast.id}
+                  open={toast.isOpen}
+                  handleOpenChange={(open) => {
+                    if (!open) handleToastDisplay(toast.id, open)
+                  }}
+                  success={toast.success}
+                  title={toast.title}
+                  description={toast.message}
+                />
+              )
+            })}
+          </div>
+        )}
+      </div>
+    </>
   )
 }

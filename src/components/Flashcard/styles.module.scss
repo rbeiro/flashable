@@ -2,12 +2,10 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 10px;
+  margin: 10px;
 }
 
 .rightClickMenuItem {
   font-size: var(--fontSize-sm);
   border-radius: var(--radii-sm);
-  height: 2rem;
-  padding: 0 0.75rem;
 }

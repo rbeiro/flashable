@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import * as AlertDialog from '../../../AlertDialog'
 import { useFlashCardStore } from '../../../../lib/zustand/flashCardStore'
 import s from './styles.module.scss'
@@ -22,6 +22,7 @@ interface Section {
 
 interface FlashcardPageProps extends FlashCardProps {
   currentSection: Section
+  disableContextMenu: Dispatch<SetStateAction<boolean>>
 }
 
 export function DefaultFlashcard({
@@ -31,6 +32,7 @@ export function DefaultFlashcard({
   answer,
   type,
   currentSection,
+  disableContextMenu,
 }: FlashcardPageProps) {
   const [answerRevealed, setAnswerRevealed] = useState(defaultAnswerRevealed)
   const { deleteFlashCard } = useFlashCardStore()
@@ -57,6 +59,10 @@ export function DefaultFlashcard({
 
     if (!error && id) deleteFlashCard(id, currentSection.id)
   }
+
+  function handleOnAlertDialogOpenChange(open: boolean) {
+    disableContextMenu(open)
+  }
   return (
     <div
       className={
@@ -69,7 +75,9 @@ export function DefaultFlashcard({
         // "Front" of flashcard
         <>
           <h3 className={s.title}>{type}:</h3>
-          <p className={s.content}>{wordOrQuestion}</p>
+          <span className={s.content}>
+            <p>{wordOrQuestion}</p>
+          </span>
           <Button
             variant="transparent-background"
             fillParent
@@ -100,11 +108,11 @@ export function DefaultFlashcard({
           </Button>
         </>
       )}
-      <AlertDialog.Root>
+      <AlertDialog.Root
+        onOpenChange={(open) => handleOnAlertDialogOpenChange(open)}
+      >
         <AlertDialog.Trigger>
-          <div>
-            <CloseButton />
-          </div>
+          <CloseButton onClick={() => disableContextMenu} />
         </AlertDialog.Trigger>
 
         <AlertDialog.Content

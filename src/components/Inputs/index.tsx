@@ -6,6 +6,7 @@ import {
 import {
   DetailedHTMLProps,
   InputHTMLAttributes,
+  RefObject,
   SyntheticEvent,
   useEffect,
   useRef,
@@ -66,12 +67,18 @@ export function MultiLineInput({
 }: MultlineInputProps) {
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
-  useEffect(() => {
-    if (inputRef.current?.style.height && inputRef.current.scrollHeight) {
-      inputRef.current.style.height = initialHeight
-      inputRef.current.style.height = `${inputRef.current.scrollHeight}px`
+  const setHeightToCurrentScrollHeight = function (
+    ref: RefObject<HTMLTextAreaElement>,
+  ) {
+    if (ref && ref.current) {
+      ref.current.style.height = initialHeight
+      ref.current.style.height = `${ref.current.scrollHeight}px`
     }
-  }, [props.value, initialHeight])
+  }
+
+  useEffect(() => {
+    setHeightToCurrentScrollHeight(inputRef)
+  })
 
   return (
     <textarea
@@ -79,6 +86,8 @@ export function MultiLineInput({
       style={{ height: initialHeight }}
       className={s.multilineInputTextarea}
       {...props}
+      onFocus={() => setHeightToCurrentScrollHeight(inputRef)}
+      onBlur={() => setHeightToCurrentScrollHeight(inputRef)}
     />
   )
 }

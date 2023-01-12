@@ -1,8 +1,11 @@
 .flashcardContainer {
   padding: 1rem;
-  background-color: var(--red3);
+  background: linear-gradient(-45deg, var(--gray3), var(--gray5), var(--gray7));
+	background-size: 400% 400%;
+	animation: gradient 7s ease infinite;
+  
   border-radius: var(--radii-sm);
-  width: 200px;
+  width: 215px;
   height: 250px;
 
   display: flex;
@@ -13,32 +16,76 @@
 
   position: relative;
 
-  transition: all .15s var(--transition-basic);
+  transition: all .15s var(--transition-basic); 
+  overflow: hidden;
+}
 
-  & .saveButton {
+.buttonsContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+
+
+.saveButton {
+  height: 100%;
+  aspect-ratio: 1 / 1;
+
+  
+  font-size: var(--fontSize-sm);
+  border-radius: var(--radii-sm);
+  padding: 0 0.5rem;
+  color: var(--grass11);
+
+  transition: all 150ms var(--transition-basic);
+
+  line-height: 0;
+
+
+  &:hover {
+    background-color: var(--grass5);
+    filter: var(--shadow-md);
+    color: var(--grass11);
+  }
+
+  position: relative;
+
+
+  & svg {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: var(--fontSize-sm);
-    border-radius: var(--radii-sm);
-    height: 2rem;
-    padding: 0 0.75rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+.cancelButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: var(--fontSize-sm);
+  border-radius: var(--radii-sm);
+  height: 2rem;
+  padding: 0 0.5rem;
+
+  color: var(--red11);
+
+  transition: all 150ms var(--transition-basic);
+
+  line-height: 0;
+
+
+  &:hover {
+    background-color: var(--red5);
+    filter: var(--shadow-md);
     color: var(--red11);
-
-    transition: all 150ms var(--transition-basic);
-
-    line-height: 0;
-
-
-    &:hover {
-      background-color: var(--red5);
-      color: var(--red11);
-    }
   }
 }
 
-.answerRevealed {
-  background-color: var(--red6);
+.flashcardBack {
+  background: linear-gradient(-45deg, var(--gray4), var(--gray6), var(--gray8));
+	background-size: 400% 400%;
+	animation: gradient 7s ease infinite;
 }
 
 .editableContent {
@@ -70,6 +117,12 @@
   border-bottom: 1px solid var(--slate12);
   width: 100%;
 
+  position: relative;
+
+  &::after {
+    content: ":";
+    position: absolute;
+  }
 }
 
 .inputWrapper {
@@ -77,13 +130,36 @@
   position: relative;
 }
 
-.typeSuggestion {
-  cursor: none;
-  pointer-events: none;
-  position: absolute;
-  font-weight: normal;
-  opacity: .4;
-  font-size: var(--fontSize-sm);
-  top: 0;
-  left: 0;
+// .typeSuggestion {
+//   cursor: none;
+//   pointer-events: none;
+//   position: absolute;
+//   font-weight: normal;
+//   opacity: .4;
+//   font-size: var(--fontSize-sm);
+//   top: 0;
+//   left: 0;
+// }
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+
+  .flashcardContainer {
+    width: 100%;
+  }
+
+  .cancelButton {
+    font-size: var(--fontSize-xs);
+  }
 }

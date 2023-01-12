@@ -1,26 +1,23 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import supabaseBrowser from '../../lib/supabase-browser'
 
 export default function SupabaseListener({
   accessToken,
-  session,
 }: {
   accessToken?: string
-  session: any
 }) {
   const router = useRouter()
 
   useEffect(() => {
     supabaseBrowser.auth.onAuthStateChange((event, session) => {
-      if (session?.access_token !== accessToken) {
-        router.refresh()
-      }
       switch (event) {
         case 'SIGNED_OUT':
           console.log(event)
+          router.push('/#')
           break
 
         case 'SIGNED_IN':

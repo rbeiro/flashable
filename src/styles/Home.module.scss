@@ -8,8 +8,9 @@
 
 .heroContainer {
   display: grid;
+  align-items: center;
   grid-template-columns: 1.5fr 1fr;
-  gap: 1rem;
+  gap: 5rem;
 
   & h1 {
     font-size: var(--fontSize-5xl);
@@ -32,6 +33,140 @@
       background-color: var(--slate1);
     }
   }
+}
+
+.headerFlashcardSection {
+  & > .mockSectionTitle {
+    padding: 0 5%;
+    cursor: default;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+
+    gap: .5rem;
+
+    & h3:hover + .searchButton {
+      background-color: var(--indigo5);
+      color: var(--indigo11);
+    }
+
+    & h3:hover + .closeButton {
+      background-color: var(--red5);
+      color: var(--red11);
+    }
+    
+  }
+}
+
+.revealSearchButtonWrapper {
+  width: 100%;
+  transition: all .5s var(--transition-basic);
+
+  &[data-state="closed"] {
+    opacity: 0;
+  }
+  &[data-state="open"] {
+    opacity: 1;
+  }
+}
+
+.closeButton {
+  font-family: inherit;
+  background-color: var(--red5);
+  color: var(--red11);
+  border-radius: var(--radii-full);
+  
+  padding: 5px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  transition: all .15s var(--transition-basic);
+
+  &:hover {
+    background-color: var(--red5);
+    color: var(--red11);
+  }
+}
+.searchButton {
+  background-color: var(--indigo5);
+    color: var(--indigo11);
+  font-family: inherit;
+  //color: transparent;
+  border-radius: var(--radii-full);
+  
+  padding: 5px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  transition: all .15s var(--transition-basic);
+
+  &:hover {
+    background-color: var(--indigo5);
+    color: var(--indigo11);
+  }
+}
+
+.flashcardExampleContainer {
+  display: grid;
+  grid-template-areas:  
+    "flashcard1 ."
+    ". flashcard2";
+
+  
+}
+
+.mockFlashcardContainer {
+  padding: 1rem;
+  border-radius: var(--radii-sm);
+  width: 200px;
+  height: 235px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  position: relative;
+
+  transition: all .15s var(--transition-basic);
+}
+
+
+.content {
+  flex: 1 1;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-size: var(--fontSize-2xl);
+  font-weight: bold;
+  
+  & p { 
+    margin: auto 0;
+    overflow: auto; 
+
+    &::-webkit-scrollbar {
+      width: 0px;
+    }
+  }
+}
+
+.title {
+  font-weight: normal;
+  font-size: var(--fontSize-sm);
+}
+
+.mockFlashcardFront {
+  background-color: var(--indigo3);
+  grid-area: flashcard1;
+  transform: translate(10%, 10%)
+}
+.mockFlashcardBack {
+  background-color: var(--indigo6);
+  grid-area: flashcard2;
+  transform: scale(1.2) translate(-10%, -10%);
 }
 
 .alreadyLoggedInText {

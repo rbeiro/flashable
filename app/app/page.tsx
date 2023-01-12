@@ -50,7 +50,7 @@ export default function Page() {
       }
     }
     checkAndFetchFlashcardData()
-  }, [])
+  })
 
   async function handleSectionDelete(id: number) {
     const { error } = await supabase
@@ -97,14 +97,30 @@ export default function Page() {
     <>
       {!hasHydrated && (
         <Skeleton.Root>
-          <Skeleton.Box></Skeleton.Box>
+          <Skeleton.Box width={215} height={250} />
+          <Skeleton.Box width={215} height={250} />
+          <Skeleton.Box width={215} height={250} />
+
+          <Skeleton.Container>
+            <Skeleton.Box width={215} height={250} />
+          </Skeleton.Container>
+
+          <Skeleton.Container>
+            <Skeleton.Container>
+              <Skeleton.Box width={215} height={250} />
+            </Skeleton.Container>
+          </Skeleton.Container>
         </Skeleton.Root>
       )}
-      {hasHydrated && sections !== undefined ? (
+      {hasHydrated &&
+        sections !== undefined &&
         sections.map((section) => {
           return (
             <>
-              <section className={s.sectionContainer} key={section.id}>
+              <section
+                className={`${s.sectionContainer} contextMenuContainer`}
+                key={section.id}
+              >
                 <div className={s.sectionTitle}>
                   <h2>{section.title}</h2>
                   <AlertDialog.Root>
@@ -160,7 +176,6 @@ export default function Page() {
                     />
                   </div>
                 </div>
-                <p>Sort by: date</p>
                 <div className={s.sectionContent}>
                   {section.flashcards &&
                     !searchedValue[section.id] &&
@@ -219,26 +234,36 @@ export default function Page() {
                   </AddNewCard>
                 </div>
               </section>
+
+              <AddNewGroup>
+                <button className={s.addNewSection}>
+                  Novo grupo
+                  <div className={s.circle}>
+                    <PlusIcon />
+                  </div>
+                </button>
+              </AddNewGroup>
             </>
           )
-        })
-      ) : (
+        })}
+
+      {hasHydrated && (sections === undefined || sections.length <= 0) && (
         <>
           <h2>Não tem nenhum flash card ainda meu parceiro!</h2>
           <div>
             <span>Para começar, adicione um novo grupo de flashcards: </span>
           </div>
+
+          <AddNewGroup>
+            <button className={s.addNewSection}>
+              Novo grupo
+              <div className={s.circle}>
+                <PlusIcon />
+              </div>
+            </button>
+          </AddNewGroup>
         </>
       )}
-
-      <AddNewGroup>
-        <button className={s.addNewSection}>
-          Novo grupo
-          <div className={s.circle}>
-            <PlusIcon />
-          </div>
-        </button>
-      </AddNewGroup>
     </>
   )
 }

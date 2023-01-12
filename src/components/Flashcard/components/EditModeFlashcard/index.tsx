@@ -4,6 +4,7 @@ import s from './styles.module.scss'
 import supabase from '../../../../lib/supabase-browser'
 import { Button } from '../../../Button'
 import { MultiLineInput } from '../../../Inputs'
+import { Check } from 'phosphor-react'
 
 interface EditFlashCardProps {
   id?: string
@@ -77,8 +78,6 @@ export function EditModeFlashcard({
         stringfiedFlashcards.push(JSON.stringify(editedFlashcardData))
       }
 
-      console.log(stringfiedFlashcards)
-
       const { error } = await supabase
         .from('sections')
         .update({
@@ -88,12 +87,13 @@ export function EditModeFlashcard({
 
       if (!error) {
         editFlashCard(editedFlashcardData, currentSection.id)
-        console.log('Edits were saved')
         toggleEditMode(false)
       }
-    } else {
-      console.log('Not Allowed')
     }
+  }
+
+  function handleCancelEditMode() {
+    toggleEditMode(false)
   }
 
   function handleTypeInput(e: BaseSyntheticEvent) {
@@ -103,7 +103,7 @@ export function EditModeFlashcard({
     <div
       className={
         answerRevealed
-          ? `${s.flashcardContainer} ${s.answerRevealed}`
+          ? `${s.flashcardContainer} ${s.flashcardBack}`
           : s.flashcardContainer
       }
     >
@@ -126,17 +126,23 @@ export function EditModeFlashcard({
               onChange={(e) => handleInputEdit(e, setWordOrQuestionValue)}
             />
           </div>
-          <Button
-            variant="transparent-background"
-            fillParent
-            size="sm"
-            type="button"
-            onClick={() => {
-              if (id) toggleShowAnswer()
-            }}
-          >
-            editar resposta
-          </Button>
+          <div className={s.buttonsContainer}>
+            <Button
+              variant="transparent-background"
+              fillParent
+              size="sm"
+              type="button"
+              onClick={() => {
+                if (id) toggleShowAnswer()
+              }}
+            >
+              editar resposta
+            </Button>
+
+            <button onClick={handleSaveEdits} className={s.saveButton}>
+              <Check size={16} weight="bold" />
+            </button>
+          </div>
         </>
       ) : (
         // "Back" of flashcard
@@ -149,21 +155,28 @@ export function EditModeFlashcard({
               onChange={(e) => handleInputEdit(e, setAnswerValue)}
             />
           </div>
-          <Button
-            variant="transparent-background"
-            fillParent
-            size="sm"
-            type="button"
-            onClick={() => {
-              if (id) toggleShowAnswer()
-            }}
-          >
-            editar pergunta
-          </Button>
+          <div className={s.buttonsContainer}>
+            <Button
+              variant="transparent-background"
+              fillParent
+              size="xs"
+              type="button"
+              onClick={() => {
+                if (id) toggleShowAnswer()
+              }}
+            >
+              editar pergunta
+            </Button>
+
+            <button onClick={handleSaveEdits} className={s.saveButton}>
+              <Check size={16} weight="bold" />
+            </button>
+          </div>
         </>
       )}
-      <button onClick={handleSaveEdits} className={s.saveButton}>
-        Salvar
+
+      <button onClick={handleCancelEditMode} className={s.cancelButton}>
+        Cancelar
       </button>
     </div>
   )

@@ -6,8 +6,12 @@ interface RequiresChildrenProps {
   children: ReactNode
 }
 
-export function Root({ children }: RequiresChildrenProps) {
-  return <AlertDialog.Root>{children}</AlertDialog.Root>
+interface RootProps extends AlertDialog.AlertDialogProps {
+  children: ReactNode
+}
+
+export function Root({ children, ...props }: RootProps) {
+  return <AlertDialog.Root {...props}>{children}</AlertDialog.Root>
 }
 
 export function Trigger({ children }: RequiresChildrenProps) {
@@ -27,11 +31,17 @@ export function Description({ children }: RequiresChildrenProps) {
 interface ContentProps extends RequiresChildrenProps {
   action: string
   actionFunction: () => void
+  onClick?: () => void
 }
 
-export function Content({ children, action, actionFunction }: ContentProps) {
+export function Content({
+  children,
+  action,
+  actionFunction,
+  onClick,
+}: ContentProps) {
   return (
-    <AlertDialog.Portal>
+    <AlertDialog.Portal onClick={onClick}>
       <AlertDialog.Overlay className={s.overlay} />
       <AlertDialog.Content className={s.content}>
         {children}

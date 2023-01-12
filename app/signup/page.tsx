@@ -2,7 +2,7 @@
 import { supabase } from '../../src/lib/supabase'
 import { z } from 'zod'
 
-import s from '../../src/styles/Signup.module.scss'
+import s from './styles/Signup.module.scss'
 import { Input, PasswordInput } from '../../src/components/Inputs'
 import {
   SyntheticEvent,
@@ -13,6 +13,9 @@ import {
 } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
+import { Button } from '../../src/components/Button'
+import { Toast } from '../../src/components/Toast'
+import { useRedirect } from '../../src/utils/useRedirect'
 
 const SignUpSchema = z.object({
   name: z.string().min(1, {
@@ -36,10 +39,23 @@ interface InputState {
 
 type SignUp = z.infer<typeof SignUpSchema>
 
+interface ToastMessage {
+  id: string
+  isOpen: boolean
+  success?: boolean
+  title?: string
+  message?: string
+}
+
 export default function SignUpPage() {
   const params = useSearchParams()
   const paramsEmail = params.get('email')
-  console.log(paramsEmail)
+
+  const [toastMessage, setToastMessages] = useState<ToastMessage | undefined>(
+    undefined,
+  )
+
+  const { isRedirecting, redirectTo } = useRedirect()
 
   const [userName, setUserName] = useState<InputState>({
     data: null,
@@ -71,7 +87,7 @@ export default function SignUpPage() {
       userPassword.data !== null &&
       confirmUserPassword.data !== null
     ) {
-      const { data, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email: userEmail.data,
         password: userPassword.data,
         options: {
@@ -81,8 +97,9 @@ export default function SignUpPage() {
         },
       })
 
-      console.log(data)
-      console.log(error)
+      if (!error) {
+        redirectTo('/signup/confirm-email')
+      }
     }
   }
 
@@ -132,52 +149,84 @@ export default function SignUpPage() {
     }
   }
 
+  function handleToastDisplay(open: boolean) {
+    console.log(open)
+    if (!isRedirecting) {
+      if (toastMessage) {
+        setToastMessages({
+          ...toastMessage,
+          isOpen: open,
+        })
+        setTimeout(() => {
+          setToastMessages(undefined)
+        }, 100)
+      }
+    }
+  }
+
   return (
-    <div className={s.wrapper}>
-      <h1>Cadastro</h1>
-      <form onSubmit={(e) => handleFormSubmit(e)} className={s.formContainer}>
-        <h2>Insira os dados abaixo:</h2>
-        <Input
-          labelName="Nome"
-          errorMessage={userName.error}
-          onBlur={(e: FocusEvent<HTMLInputElement>) =>
-            handleInputValidation(e.target.value, 'name', setUserName)
-          }
-        />
+    <>
+      <div className={s.wrapper}>
+        <h1>Cadastro</h1>
+        <form onSubmit={(e) => handleFormSubmit(e)} className={s.formContainer}>
+          <h2>Insira os dados abaixo:</h2>
+          <Input
+            labelName="Nome"
+            errorMessage={userName.error}
+            onBlur={(e: FocusEvent<HTMLInputElement>) =>
+              handleInputValidation(e.target.value, 'name', setUserName)
+            }
+          />
 
-        <Input
-          errorMessage={userEmail.error}
-          labelName="E-mail"
-          defaultValue={paramsEmail || ''}
-          onBlur={(e: FocusEvent<HTMLInputElement>) =>
-            handleInputValidation(e.target.value, 'email', setUserEmail)
-          }
-        />
+          <Input
+            errorMessage={userEmail.error}
+            labelName="E-mail"
+            defaultValue={paramsEmail || ''}
+            onBlur={(e: FocusEvent<HTMLInputElement>) =>
+              handleInputValidation(e.target.value, 'email', setUserEmail)
+            }
+          />
 
-        <PasswordInput
-          errorMessage={userPassword.error}
-          labelName="Senha"
-          onBlur={(e: FocusEvent<HTMLInputElement>) =>
-            handleInputValidation(e.target.value, 'password', setUserPassword)
-          }
-        />
+          <PasswordInput
+            errorMessage={userPassword.error}
+            labelName="Senha"
+            onBlur={(e: FocusEvent<HTMLInputElement>) =>
+              handleInputValidation(e.target.value, 'password', setUserPassword)
+            }
+          />
 
-        <PasswordInput
-          errorMessage={confirmUserPassword.error}
-          labelName="Confirmar senha"
-          onBlur={(e: FocusEvent<HTMLInputElement>) =>
-            handleInputValidation(
-              e.target.value,
-              'passwordConfim',
-              setConfirmUserPassword,
-            )
-          }
-        />
-        <span className={s.redirectLink}>
-          Já possui uma conta? <Link href="/login">Faça o login.</Link>
-        </span>
-        <button type="submit">cadastrar-se</button>
-      </form>
-    </div>
+          <PasswordInput
+            errorMessage={confirmUserPassword.error}
+            labelName="Confirmar senha"
+            onBlur={(e: FocusEvent<HTMLInputElement>) =>
+              handleInputValidation(
+                e.target.value,
+                'passwordConfim',
+                setConfirmUserPassword,
+              )
+            }
+          />
+          <span className={s.redirectLink}>
+            Já possui uma conta? <Link href="/login">Faça o login.</Link>
+          </span>
+          <Button type="submit">cadastrar-se</Button>
+        </form>
+      </div>
+
+      {toastMessage && (
+        <div className={s.toastMessageContainer}>
+          <Toast
+            key={toastMessage.id}
+            open={toastMessage.isOpen}
+            handleOpenChange={(open) => {
+              if (!open) handleToastDisplay(open)
+            }}
+            success={toastMessage.success}
+            title={toastMessage.title}
+            description={toastMessage.message}
+          />
+        </div>
+      )}
+    </>
   )
 }

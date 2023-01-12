@@ -26,14 +26,16 @@ export function ProfileMenu() {
     undefined,
   )
 
-  const { isRedirecting, redirectTo } = useRedirect()
+  const { isRedirecting, redirectTo, refreshPage } = useRedirect()
+
   async function handleUserSignOut() {
     const { error } = await supabaseBrowser.auth.signOut()
     if (!error) {
-      useFlashCardStore.persist.clearStorage()
       setUserDataFirstLoad(false)
+
       setSections(undefined)
       redirectTo('/')
+
       setToastMessages({
         id: crypto.randomUUID(),
         isOpen: true,
@@ -87,10 +89,6 @@ export function ProfileMenu() {
               <Avatar />
             </NavigationMenu.Trigger>
             <NavigationMenu.Content className={s.content}>
-              {/* <div className={s.contentOption}>
-            <GearIcon />
-            <Link href={"/settings"}>Configurações</Link>
-          </div> */}
               <div className={s.contentOption} onClick={handleUserSignOut}>
                 <Button
                   style={{ justifyContent: 'flex-start' }}

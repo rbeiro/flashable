@@ -8,8 +8,6 @@ import '../src/styles/global.scss'
 
 import s from '../src/styles/Layout.module.scss'
 
-export const revalidate = 0
-
 export default async function RootLayout({
   children,
 }: {
@@ -20,6 +18,8 @@ export default async function RootLayout({
   const {
     data: { session },
   } = await supabase.auth.getSession()
+
+  console.log(session)
 
   return (
     <html lang="pt-br" className="dark-theme">
@@ -38,10 +38,7 @@ export default async function RootLayout({
       </head>
 
       <body>
-        <SupabaseListener
-          accessToken={session?.access_token}
-          session={session}
-        />
+        <SupabaseListener accessToken={session?.access_token} />
         <Suspense fallback={<p>Loading header...</p>}>
           <Header session={session} />
         </Suspense>

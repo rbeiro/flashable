@@ -34,13 +34,14 @@ export function Flashcard({
   currentSection,
 }: FlashcardPageProps) {
   const [editMode, setEditMode] = useState(false)
+  const [isContextMenuDisabled, setIsContextMenuDisabled] = useState(false)
 
   function toggleEditMode(value: boolean) {
     setEditMode(value)
   }
   return (
     <RightClickMenu.Root>
-      <RightClickMenu.Trigger>
+      <RightClickMenu.Trigger disabled={isContextMenuDisabled}>
         {!editMode && (
           <DefaultFlashcard
             id={id}
@@ -49,6 +50,7 @@ export function Flashcard({
             answer={answer}
             type={type}
             currentSection={currentSection}
+            disableContextMenu={setIsContextMenuDisabled}
           />
         )}
         {editMode && (
@@ -67,7 +69,11 @@ export function Flashcard({
       <RightClickMenu.Portal>
         <RightClickMenu.Content className={s.rightClickMenuContent}>
           <RightClickMenu.Item className={s.rightClickMenuItem}>
-            <Button size="sm" onClick={() => toggleEditMode(true)}>
+            <Button
+              variant="colorful"
+              size="sm"
+              onClick={() => toggleEditMode(true)}
+            >
               Editar
             </Button>
           </RightClickMenu.Item>

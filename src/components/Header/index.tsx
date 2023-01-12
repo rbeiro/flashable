@@ -2,7 +2,9 @@
 
 import { Session } from '@supabase/supabase-js'
 import Link from 'next/link'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
+import supabaseBrowser from '../../lib/supabase-browser'
+import { useFlashCardStore } from '../../lib/zustand/flashCardStore'
 import { Button } from '../Button'
 import { Notifications } from '../Notifications'
 import { ProfileMenu } from '../ProfileMenu'
@@ -12,11 +14,24 @@ interface HeaderProps {
   session: Session | null
 }
 
-export function Header({ session }: HeaderProps) {
+export function Header({ session: serverSideSession }: HeaderProps) {
+  const [session, setSession] = useState(serverSideSession)
+  const { userDataFirstLoad } = useFlashCardStore()
+  if (!serverSideSession && userDataFirstLoad) {
+    getSession()
+  }
+
+  async function getSession() {
+    const {
+      data: { session },
+    } = await supabaseBrowser.auth.getSession()
+    setSession(session)
+  }
+
   if (session) {
     return (
-      <div className={s.wrapper}>
-        <header className={s.content}>
+      <header className={s.wrapper}>
+        <div className={s.content}>
           <Link href={'/'} className={s.logo}>
             flashable
           </Link>
@@ -28,8 +43,8 @@ export function Header({ session }: HeaderProps) {
               <ProfileMenu />
             </Suspense>
           </nav>
-        </header>
-      </div>
+        </div>
+      </header>
     )
   }
   return (

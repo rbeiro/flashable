@@ -2,7 +2,7 @@ import 'server-only'
 
 import { ReactNode } from 'react'
 import { createClient } from '../../src/lib/supabase-server'
-import s from '../../src/styles/Signup.module.scss'
+import s from './styles/SignupLayout.module.scss'
 import { redirect } from 'next/navigation'
 export const revalidate = 0
 

@@ -17,7 +17,7 @@ interface ButtonProps
   withLink?: boolean
   children: ReactNode
   variant?: 'colorful' | 'transparent-background' | 'border-only' | 'default'
-  size?: 'sm' | 'md'
+  size?: 'sm' | 'md' | 'xs'
   fillParent?: boolean
   isLoading?: boolean
 }
