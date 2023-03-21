@@ -32,7 +32,7 @@ export default function SupabaseListener({
         default:
       }
     })
-  }, [])
+  }, [router])
 
   return null
 }

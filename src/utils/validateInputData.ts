@@ -1,9 +1,8 @@
 import { Dispatch, SetStateAction } from 'react'
-import { z, ZodSchema } from 'zod'
 
 export function validadeInputData(
   value: string,
-  key: {},
+  key: any,
   setState: Dispatch<
     SetStateAction<{
       data: null | string
@@ -16,16 +15,6 @@ export function validadeInputData(
   console.log(value)
   if (validationResult.success) {
     if (key === 'passwordConfim') {
-      console.log(userPassword.data === value)
-      console.log(value)
-      if (userPassword.data === value) {
-        setState({
-          data: value,
-          error: undefined,
-        })
-        return
-      }
-
       setState({
         data: null,
         error: 'As senhas não conferem',

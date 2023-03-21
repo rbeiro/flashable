@@ -1,6 +1,4 @@
-import Image from 'next/image'
 import { User } from 'phosphor-react'
-import stock from './StockImages/bighead.svg'
 import s from './styles.module.scss'
 
 interface AvatarProps {
