@@ -49,7 +49,7 @@
 }
 
 .revealSearchButtonWrapper {
-  width: 100%;
+  width: 300px;
   transition: all .5s var(--transition-basic);
 
   &[data-state="closed"] {

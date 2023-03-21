@@ -172,7 +172,6 @@ export default function Page() {
                       labelBackgroundColor="var(--slate1)"
                       value={searchedValue[section.id] || ''}
                       onChange={(e) => handleFlashcardSearch(e, section.id)}
-                      onBlur={() => handleSearchInputToggle(section.id)}
                     />
                   </div>
                 </div>

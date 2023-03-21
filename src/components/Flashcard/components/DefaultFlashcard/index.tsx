@@ -94,7 +94,9 @@ export function DefaultFlashcard({
         // "Back" of flashcard
         <>
           <h3 className={s.title}>Resposta:</h3>
-          <p className={s.content}>{answer}</p>
+          <span className={s.content}>
+            <p>{answer}</p>
+          </span>
           <Button
             variant="transparent-background"
             fillParent

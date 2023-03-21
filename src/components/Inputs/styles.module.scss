@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   min-height: 3.125rem;
-  transition: height 2s var(--transition-basic);
 }
 .inputContainer {
 
@@ -13,7 +12,7 @@
 
   z-index: 1;
 
-  border: solid 1px var(--slate9);
+  border: solid 1px var(--gray9);
   border-radius: var(--radii-sm);
 
     & input {
@@ -51,7 +50,7 @@
       background-color: var(--indigo3);
       height: 1.125rem;
       z-index: -1;
-      color: var(--slate9);
+      color: var(--gray9);
       
       position: absolute;
       top: 50%;
@@ -70,7 +69,7 @@
   cursor: text;
   overflow-wrap: break-word;
   overflow-y: scroll;
-  border-bottom: 1px solid var(--slate12);
+  border-bottom: 1px solid var(--gray12);
   padding-bottom: 1px;
   resize: none;
   display: flex;

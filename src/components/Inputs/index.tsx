@@ -24,6 +24,7 @@ interface InputProps
   errorMessage?: string
   whiteSpace?: boolean
   labelBackgroundColor?: string
+  borderColor?: string
 }
 
 export function Input({
@@ -32,13 +33,20 @@ export function Input({
   reference,
   errorMessage,
   labelBackgroundColor,
+  borderColor,
   ...props
 }: InputProps) {
   return (
     <div className={s.errorMessageInputWrapper}>
-      <div className={s.inputContainer}>
+      <div className={s.inputContainer} style={{ borderColor }}>
         <input placeholder={labelName} ref={reference} {...props} />
-        <label style={{ backgroundColor: labelBackgroundColor }}>
+        <label
+          style={
+            borderColor
+              ? { backgroundColor: labelBackgroundColor, color: borderColor }
+              : { backgroundColor: labelBackgroundColor }
+          }
+        >
           {labelName}
         </label>
       </div>
@@ -48,7 +56,7 @@ export function Input({
           {errorMessage}
         </span>
       )}
-      {whiteSpace && <span className={s.observationMessage}>.</span>}
+      {whiteSpace && <span className={s.observationMessage}>{''}</span>}
     </div>
   )
 }
@@ -150,24 +158,6 @@ export function PasswordInput({
 
 interface MaskedPlaceholderInputProps extends InputProps {
   maskplaceholder: string
-}
-
-interface KeyboardEvent<T = Element> extends SyntheticEvent<T, KeyboardEvent> {
-  altKey: boolean
-  /** @deprecated */
-  charCode: number
-  ctrlKey: boolean
-  getModifierState(key: string): boolean
-  key: string
-  /** @deprecated */
-  keyCode: number
-  locale: string
-  location: number
-  metaKey: boolean
-  repeat: boolean
-  shiftKey: boolean
-  /** @deprecated */
-  which: number
 }
 
 export function MaskedPlaceholderInput({

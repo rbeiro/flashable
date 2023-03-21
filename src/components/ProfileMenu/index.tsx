@@ -26,7 +26,7 @@ export function ProfileMenu() {
     undefined,
   )
 
-  const { isRedirecting, redirectTo, refreshPage } = useRedirect()
+  const { isRedirecting, redirectTo } = useRedirect()
 
   async function handleUserSignOut() {
     const { error } = await supabaseBrowser.auth.signOut()
