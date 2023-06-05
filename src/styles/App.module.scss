@@ -7,7 +7,10 @@
     font-size: var(--fontSize-4xl);
   }
 }
-
+.content:nth-child(1),
+.content:nth-child(6) {
+  background-position: bottom center;
+}
 .closeButton {
   font-family: inherit;
   background-color: var(--red5);
