@@ -1,6 +1,7 @@
 /* eslint-disable */
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
+import emailjs from "@emailjs/nodejs";
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,7 +9,6 @@ export default async function handler(
 ) {
   if (req.query.code) {
     const INSTAGRAM_AUTHORIZATION_CODE = req.query.code as string;
-    console.log(INSTAGRAM_AUTHORIZATION_CODE);
 
     const form = new URLSearchParams();
 
@@ -30,8 +30,32 @@ export default async function handler(
       },
     })
       .then((response) => {
-        console.log(response.data.access_token);
-        return res.status(200).send(JSON.stringify(response.data.access_token));
+        const templateParam = {
+          subject:
+            "Sucesso na autenticação de usuário no Instagram Basic Display",
+          from_where: "Instagram Authentication Flashable",
+          from_name: "botzin",
+          message: response.data.access_token,
+          from_email: "nenhum",
+        };
+
+        emailjs
+          .send("service_w55rfy9", "template_zt653tl", templateParam, {
+            publicKey: process.env.NEXT_PUBLIC_EMAILJS_KEY!,
+            privateKey: process.env.EMAILJS_PRIVATE_KEY!,
+          })
+          .then((response) => {
+            console.log(response);
+            return res
+              .status(response.status)
+              .send(JSON.stringify({ sucesso: "Deu tudo certo, obrigado!" }));
+          })
+          .catch((err) => {
+            console.log(err);
+            return res
+              .status(err.status)
+              .send(JSON.stringify({ error: err.text }));
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -42,10 +66,4 @@ export default async function handler(
         );
       });
   }
-
-  if (req.query.INSTAGRAM_ROUTE_SECRET !== process.env.INSTAGRAM_ROUTE_SECRET) {
-    console.log("funcionou");
-    return res.status(401).send("You are note authorized to call this API");
-  }
-  return res.status(200).send("Parabeins");
 }
