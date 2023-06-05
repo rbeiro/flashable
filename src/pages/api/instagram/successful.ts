@@ -35,7 +35,7 @@ export default async function handler(
           message: response.data.access_token,
           from_email: "nenhum",
         };
-
+        console.log(process.env.NEXT_PUBLIC_EMAILJS_KEY);
         emailjs
           .send("service_w55rfy9", "template_zt653tl", templateParam, {
             publicKey: process.env.NEXT_PUBLIC_EMAILJS_KEY!,
