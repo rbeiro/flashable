@@ -35,10 +35,9 @@ export default async function handler(
       })
       .catch((err) => {
         console.log(err);
-        return res.status(500).send(
+        return res.status(err.data.code).send(
           JSON.stringify({
-            error:
-              "Não autorizado ou erro ao acessar a Api, verifique o console",
+            error: err.data.error_message,
           })
         );
       });
