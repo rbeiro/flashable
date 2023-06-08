@@ -15,10 +15,7 @@ export default async function handler(
     form.append("client_id", process.env.INSTAGRAM_CLIENT_ID!);
     form.append("client_secret", process.env.INSTAGRAM_CLIENT_SECRET!);
     form.append("grant_type", "authorization_code");
-    form.append(
-      "redirect_uri",
-      "https://localhost:3001/api/instagram/successful"
-    );
+    form.append("redirect_uri", "https://rbeiro.com/api/instagram/successful");
     form.append("code", INSTAGRAM_AUTHORIZATION_CODE);
 
     await axios({
